@@ -1,18 +1,16 @@
 // assign 80 once you accept a challenge to implement Level 80 requirements
 export const level = 80;
-
 /*
   Add parameters as appropriate.
   Should allow arbitrary number of expressions.
   Should work with arbitrary function expressions passed.
   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates
 */
+export function transform(stringsArg, ...keysArg) {
+  const strings = [...stringsArg];
+  const keys = [...keysArg];
 
-export function transform(str, ...expressions) {
-  const strings = [...str];
-  const keys = [...expressions];
-
-  const transformKeys = (key, index) => {
+  const transformKey = (key, index) => {
     switch (typeof key) {
       case 'number':
         return key * 2 + 3;
@@ -29,14 +27,11 @@ export function transform(str, ...expressions) {
     }
   };
 
-  const transformed = keys.reduce(
-    (acc, cur, index) => acc + transformKeys(cur, index) + strings[index + 1],
+  return keys.reduce(
+    (acc, key, index) => acc + transformKey(key, index) + strings[index + 1],
     strings[0],
   );
-
-  return transformed;
 }
-
 /*
   Level 1: expects no parameters. Returns its own name capitalized.
     Usage example:
